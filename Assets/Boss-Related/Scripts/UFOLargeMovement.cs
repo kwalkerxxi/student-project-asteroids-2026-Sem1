@@ -1,0 +1,72 @@
+using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]
+public class UFOLargeMovement : MonoBehaviour
+{
+    public float speed = 3f;
+
+    public float directionChangeInterval = 1.5f;
+
+    private Rigidbody rb;
+
+    private Vector3 moveDir;
+
+    private float timer;
+
+    private float horizontalDirection;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+
+        horizontalDirection =
+            transform.position.x < 0 ? 1f : -1f;
+
+        PickNewDirection();
+    }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+
+        if (timer >= directionChangeInterval)
+        {
+            timer = 0f;
+            PickNewDirection();
+        }
+
+        WrapScreen();
+    }
+
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = moveDir * speed;
+    }
+
+    void PickNewDirection()
+    {
+        float vertical =
+            Random.Range(-1f, 1f);
+
+        moveDir =
+            new Vector3(horizontalDirection, 0, vertical).normalized;
+    }
+
+    void WrapScreen()
+    {
+        Camera cam = Camera.main;
+
+        float height = cam.orthographicSize;
+        float width = height * cam.aspect;
+
+        Vector3 pos = transform.position;
+
+        if (pos.x > width) pos.x = -width;
+        if (pos.x < -width) pos.x = width;
+
+        if (pos.y > height) pos.y = -height;
+        if (pos.y < -height) pos.y = height;
+
+        transform.position = pos;
+    }
+}
