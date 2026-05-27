@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1233149941 &-2648178851377032985
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: freesound_community-videogame-death-sound-43894_{-2648178851377032985}
+  m_AudioClip: {fileID: 8300000, guid: cde3c6d79cd00054aba964805d9d1ff3, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-438766260316466026
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: lesiakower-8-bit-game-over-sound-effect-331435_{-438766260316466026}
+  m_AudioClip: {fileID: 8300000, guid: ceac8ecef91013a45b8801af3f431c07, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &2503267646187966084
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: make_more_sound-8-bit-video-game-fail-version-2-145478_{2503267646187966084}
+  m_AudioClip: {fileID: 8300000, guid: 42d95267d46c76547a59ec0634472a0d, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &3259553099218346437
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: freesound_community-retro-video-game-death-95730_{3259553099218346437}
+  m_AudioClip: {fileID: 8300000, guid: 100d30e033a20894092bfa8bbf5d9d0e, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1307931743 &6418180475301049370
+AudioRandomContainer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Dying
+  m_Volume: 0
+  m_Pitch: 0
+  m_AutomaticTriggerTime: 0
+  m_LoopCount: 1
+  m_VolumeRandomizationRange: {x: -3.1496048, y: 2.5196838}
+  m_PitchRandomizationRange: {x: -75.59044, y: 56.692886}
+  m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
+  m_LoopCountRandomizationRange: {x: 0, y: 0}
+  m_Elements:
+  - {fileID: 3259553099218346437}
+  - {fileID: -2648178851377032985}
+  - {fileID: -438766260316466026}
+  - {fileID: 2503267646187966084}
+  m_AvoidRepeatingLast: 1
+  m_PlaybackMode: 2
+  m_TriggerMode: 1
+  m_AutomaticTriggerMode: 1
+  m_LoopMode: 2
+  m_VolumeRandomizationEnabled: 1
+  m_PitchRandomizationEnabled: 1
+  m_AutomaticTriggerTimeRandomizationEnabled: 0
+  m_LoopCountRandomizationEnabled: 0

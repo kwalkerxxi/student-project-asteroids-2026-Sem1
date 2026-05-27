@@ -1,0 +1,94 @@
+In [TextMesh Pro Documentation](https://docs.unity3d.com/Packages/com.unity.textmeshpro@latest?utm_source=chatgpt.com), you use **Rich Text tags** inside the string to style text.
+
+Common markup examples:
+
+```csharp
+tmpText.text = "This is <b>bold</b> text.";
+```
+
+## Common Tags
+
+| Effect        | Tag       | Example                         |
+| ------------- | --------- | ------------------------------- |
+| Bold          | `<b>`     | `<b>Bold</b>`                   |
+| Italic        | `<i>`     | `<i>Italic</i>`                 |
+| Underline     | `<u>`     | `<u>Underline</u>`              |
+| Strikethrough | `<s>`     | `<s>Strike</s>`                 |
+| Color         | `<color>` | `<color=red>Red</color>`        |
+| Size          | `<size>`  | `<size=150%>Big</size>`         |
+| Highlight     | `<mark>`  | `<mark=#ffff00aa>Marked</mark>` |
+| Superscript   | `<sup>`   | `x<sup>2</sup>`                 |
+| Subscript     | `<sub>`   | `H<sub>2</sub>O`                |
+
+---
+
+## Examples
+
+### Bold + Color
+
+```csharp
+tmpText.text = "<b><color=#ff0000>Danger!</color></b>";
+```
+
+### Mixed Formatting
+
+```csharp
+tmpText.text =
+    "Normal <b>Bold</b> <i>Italic</i> " +
+    "<color=yellow>Yellow</color>";
+```
+
+### Size Changes
+
+```csharp
+tmpText.text = "Small <size=200%>Huge</size>";
+```
+
+---
+
+## Unity Inspector
+
+You can also type rich text directly into the TMP component text field:
+
+```text
+Welcome <b>Player</b>!
+```
+
+Make sure **Rich Text** is enabled on the TextMeshPro component (usually enabled by default).
+
+---
+
+## Useful TMP-Specific Tags
+
+TextMesh Pro supports extra tags beyond standard Unity rich text:
+
+```text
+<align=center>
+<font="FontAssetName">
+<sprite=0>
+<voffset=0.5em>
+<cspace=10>
+<mspace=0.5em>
+```
+
+Example:
+
+```csharp
+tmpText.text = "<align=center><b>Centered Bold</b></align>";
+```
+
+---
+
+## Escaping Tags
+
+If you want literal `<` and `>` characters:
+
+```csharp
+tmpText.text = "Use &lt;b&gt;bold&lt;/b&gt;";
+```
+
+---
+
+## Full Tag Reference
+
+[TMP Rich Text Tags Reference](https://docs.unity3d.com/Packages/com.unity.textmeshpro@latest/index.html?subfolder=%2Fmanual%2FRichTextSupportedTags.html&utm_source=chatgpt.com)
