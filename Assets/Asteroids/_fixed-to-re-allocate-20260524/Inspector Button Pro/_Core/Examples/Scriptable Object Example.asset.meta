@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 872953eb1138fe446894d5c344c5ac61
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 151474
+  packageName: Inspector Button Pro - Editor Buttons With Parameters
+  packageVersion: 2.0.0
+  assetPath: Assets/Inspector Button Pro/_Core/Examples/Scriptable Object Example.asset
+  uploadId: 619629

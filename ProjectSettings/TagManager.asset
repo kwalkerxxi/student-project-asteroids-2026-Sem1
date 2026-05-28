@@ -8,6 +8,9 @@ TagManager:
   - Asteroid
   - PickUp
   - PickUp_ExtraGuns
+  - PickUp_InfiniteAmmo
+  - Enemy
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
@@ -21,8 +24,8 @@ TagManager:
   - Asteroid
   - Buildings
   - AsteroidLarge
-  - 
-  - 
+  - Enemy
+  - EnemyBullet
   - 
   - 
   - 

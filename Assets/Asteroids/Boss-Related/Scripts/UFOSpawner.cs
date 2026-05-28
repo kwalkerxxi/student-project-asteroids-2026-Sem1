@@ -23,7 +23,7 @@ public class UFOSpawner : MonoBehaviour
 
     void SpawnLoop()
     {
-        if (!ufoAlive)
+        if(!ufoAlive)
         {
             SpawnUFO();
             waitTimeForNextSpawn = Random.Range(minSpawnDelay, maxSpawnDelay);
@@ -36,27 +36,28 @@ public class UFOSpawner : MonoBehaviour
 
         GameObject prefab = spawnSmall ? smallUFOPrefab : largeUFOPrefab;
 
-        Camera cam = Camera.main;
+        //ORTHOGRAPHIC SPAWNING
+        //Camera cam = Camera.main;
+        //float screenHeight = cam.orthographicSize * 2f;
+        //float screenWidth = screenHeight * cam.aspect;
+        //bool spawnLeft = Random.value > 0.5f;
+        //float x =
+        //    spawnLeft
+        //    ? (-screenWidth / 2f) - 2f
+        //    : (screenWidth / 2f) + 2f;
+        //float z = Random.Range(
+        //    -screenHeight / 2f,
+        //    screenHeight / 2f
+        //);
+        //Vector3 spawnPos = new Vector3(x, 0f, z);
 
-        float screenHeight = cam.orthographicSize * 2f;
+        Vector3 spawnLocation = ScreenPositionUtility.GetRandomOffScreenPosition(
+              Camera.main,
+              fixedY: 0f,
+              offscreenPercent: 0.1f, ScreenPositionUtility.SpawnAxis.HORIZONTAL
+          );
 
-        float screenWidth = screenHeight * cam.aspect;
-
-        bool spawnLeft = Random.value > 0.5f;
-
-        float x =
-            spawnLeft
-            ? (-screenWidth / 2f) - 2f
-            : (screenWidth / 2f) + 2f;
-
-        float z = Random.Range(
-            -screenHeight / 2f,
-            screenHeight / 2f
-        );
-
-        Vector3 spawnPos = new Vector3(x, 0f, z);
-
-        GameObject ufo = Instantiate(prefab, spawnPos, Quaternion.identity);
+        GameObject ufo = Instantiate(prefab, spawnLocation, Quaternion.identity);
 
         ufoAlive = true;
 
@@ -69,7 +70,7 @@ public class UFOSpawner : MonoBehaviour
     {
         int score = currentScoreForSpawning;
 
-        if (score >= scoreForSmallOnly)
+        if(score >= scoreForSmallOnly)
         {
             return true;
         }

@@ -9,27 +9,27 @@ public class UFOSmallShooting : MonoBehaviour
     private BulletPool bulletPool;
 
 
-    public float fireRate = 1f;
+    [SerializeField] float fireRate = 1f;
 
-    public float bulletSpeed = 10f;
+    [SerializeField] float bulletSpeed = 10f;
 
     [Header("Aim Error")]
-    public float maxAimError = 25f;
+    [SerializeField] float maxAimError = 25f;
 
-    public float minAimError = 3f;
+    [SerializeField] float minAimError = 3f;
 
-    public int perfectAccuracyScore = 40000;
-    public int currentAccuracyScore = 10000;
+    [SerializeField] int perfectAccuracyScore = 40000;
+    [SerializeField] int currentAccuracyScore = 10000;
 
     private float timer;
 
-    private Transform player;
+    private Transform playerToTarget;
 
     private void Awake()
     {
         bool foundPool = BulletPool.TryGetPool(desiredPoolType, out bulletPool);
 
-        if (!foundPool)
+        if(!foundPool)
         {
             Debug.LogError($"No BulletPool registered for {desiredPoolType}");
         }
@@ -38,22 +38,27 @@ public class UFOSmallShooting : MonoBehaviour
 
     private void Start()
     {
-        GameObject p =
-            GameObject.FindGameObjectWithTag("Player");
+        //GameObject playerFoundInScene = GameObject.FindGameObjectWithTag("Player");
+        Transform playerFoundInScene = PlayerJoiningBehaviour.RandomPlayerToTarget;
 
-        if (p != null)
-            player = p.transform;
+        if(playerFoundInScene != null)
+        {
+            playerToTarget = playerFoundInScene.transform;
+        }
     }
 
     private void Update()
     {
-        if (player == null)
+        if(playerToTarget == null)
+        {
             return;
+        }
 
         timer += Time.deltaTime;
 
-        if (timer >= fireRate)
+        if(timer >= fireRate)
         {
+            Debug.Log("Time Bullet Released " + Time.time + "Fire Rate" + fireRate);
             timer = 0f;
             ShootAtPlayer();
         }
@@ -61,28 +66,13 @@ public class UFOSmallShooting : MonoBehaviour
 
     void ShootAtPlayer()
     {
-        Vector3 shootingDirection =
-            (player.position - transform.position).normalized;
+        Vector3 shootingDirection = (playerToTarget.position - transform.position).normalized;
 
-        float accuracy =
-            Mathf.InverseLerp(
-                0,
-                perfectAccuracyScore,
-                currentAccuracyScore
-            );
+        float accuracy = Mathf.InverseLerp(0, perfectAccuracyScore, currentAccuracyScore);
 
-        float currentError =
-            Mathf.Lerp(
-                maxAimError,
-                minAimError,
-                accuracy
-            );
+        float currentError = Mathf.Lerp(maxAimError, minAimError, accuracy);
 
-        float randomOffset =
-            Random.Range(
-                -currentError,
-                currentError
-            );
+        float randomOffset = Random.Range(-currentError, currentError);
 
         shootingDirection = Quaternion.Euler(0, randomOffset, 0) * shootingDirection;
 
@@ -99,7 +89,8 @@ public class UFOSmallShooting : MonoBehaviour
         //    bulletComponent.SetSpeedAndDirection(bulletSpeed, shootingDirection);
         //}
 
-        if (bulletPool == null) { return; }
+        if(bulletPool == null)
+        { return; }
 
         bulletPool.FireBullet(
             transform.position,

@@ -3,9 +3,6 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-
-
-
     public int maximumHealth = 3;
     int currentHealth;
     PlayerScore lastAttacker;
@@ -15,7 +12,7 @@ public class Health : MonoBehaviour
     void Awake()
     {
         currentHealth = maximumHealth;
-        if (particleHolder == null)
+        if(particleHolder == null)
         {
             particleHolder = new GameObject("Particle Holder - Health Death");
         }
@@ -24,7 +21,7 @@ public class Health : MonoBehaviour
     {
         currentHealth -= damage;
         lastAttacker = attacker;
-        if (currentHealth <= 0)
+        if(currentHealth <= 0)
         {
             Die();
         }
@@ -32,11 +29,11 @@ public class Health : MonoBehaviour
     void Die()
     {
         ScoreValue score = GetComponent<ScoreValue>();
-        if (score && lastAttacker)
+        if(score && lastAttacker)
         {
             lastAttacker.AddScore(score.Value);
         }
-        if (ParticleSystemOnDeath != null)
+        if(ParticleSystemOnDeath != null)
         {
             GameObject deathParticleSystem = Instantiate(ParticleSystemOnDeath, particleHolder.transform);
             deathParticleSystem.transform.SetPositionAndRotation(transform.position, transform.rotation);

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class UltrawideAdjuster : MonoBehaviour
 {
@@ -27,23 +28,24 @@ public class UltrawideAdjuster : MonoBehaviour
         aspect = (float)Screen.width / Screen.height;
 
         // Only update if aspect ratio changed
-        if (!Mathf.Approximately(aspect, lastAspect))
+        if(!Mathf.Approximately(aspect, lastAspect))
         {
             lastAspect = aspect;
             ApplyAdjustments();
         }
     }
 
-    private void ApplyAdjustments()
+
+    public void ApplyAdjustments()
     {
         //aspect = (float)Screen.width / Screen.height;
-       // lastAspect = aspect;
+        // lastAspect = aspect;
 
         // 16:10 aspect ratio = 1.6
         bool isUltrawide = aspect > 1.6f;
 
         // Camera FOV
-        if (targetCamera != null)
+        if(targetCamera != null)
         {
             targetCamera.fieldOfView = isUltrawide
                 ? ultrawideFOV
@@ -51,7 +53,7 @@ public class UltrawideAdjuster : MonoBehaviour
         }
 
         // UI X Position
-        if (targetUI != null)
+        if(targetUI != null)
         {
             Vector2 pos = targetUI.anchoredPosition;
 

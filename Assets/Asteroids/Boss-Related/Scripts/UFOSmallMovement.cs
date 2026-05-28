@@ -7,9 +7,9 @@ public class UFOSmallMovement : MonoBehaviour
 
     public float directionChangeInterval = 0.8f;
 
-    private Rigidbody rb;
+    private Rigidbody cachedRigidbody;
 
-    private Vector2 moveDir;
+    private Vector3 moveDirection;
 
     private float timer;
 
@@ -17,10 +17,9 @@ public class UFOSmallMovement : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        cachedRigidbody = GetComponent<Rigidbody>();
 
-        horizontalDirection =
-            transform.position.x < 0 ? 1f : -1f;
+        horizontalDirection = transform.position.x < 0 ? 1f : -1f;
 
         PickNewDirection();
     }
@@ -29,44 +28,24 @@ public class UFOSmallMovement : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= directionChangeInterval)
+        if(timer >= directionChangeInterval)
         {
             timer = 0f;
             PickNewDirection();
         }
-
-        WrapScreen();
     }
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = moveDir * speed;
+        cachedRigidbody.linearVelocity = moveDirection * speed;
+        //cachedRigidbody.AddForce(moveDirection * speed);
     }
 
     void PickNewDirection()
     {
-        float vertical =
-            Random.Range(-1f, 1f);
+        float vertical = Random.Range(-1f, 1f);
 
-        moveDir =
-            new Vector2(horizontalDirection, vertical).normalized;
+        moveDirection = new Vector3(horizontalDirection, 0, vertical).normalized;
     }
 
-    void WrapScreen()
-    {
-        Camera cam = Camera.main;
-
-        float height = cam.orthographicSize;
-        float width = height * cam.aspect;
-
-        Vector3 pos = transform.position;
-
-        if (pos.x > width) pos.x = -width;
-        if (pos.x < -width) pos.x = width;
-
-        if (pos.y > height) pos.y = -height;
-        if (pos.y < -height) pos.y = height;
-
-        transform.position = pos;
-    }
 }

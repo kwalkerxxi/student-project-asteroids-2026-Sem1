@@ -402,6 +402,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  playerTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &95110951
 GameObject:
   m_ObjectHideFlags: 0
@@ -5707,6 +5712,187 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175030987}
   m_CullTransparentMesh: 1
+--- !u!1 &1207842986
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1207842989}
+  - component: {fileID: 1207842988}
+  - component: {fileID: 1207842987}
+  m_Layer: 0
+  m_Name: Responsive Code
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1207842987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207842986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3084b8959d3ea34da262a6071dc26a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AspectRatioLogic
+  ultraWideMin: 3.5555556
+  ultraWideMax: 5.3333335
+  veryWideMin: 5.3333335
+  lastWidth: 0
+  lastHeight: 0
+--- !u!114 &1207842988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207842986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c564627a45c767a49a8af187274ec154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AspectRatioEvents
+  OnStandard:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1450258900}
+        m_TargetAssemblyTypeName: UnityEngine.Camera, UnityEngine
+        m_MethodName: set_fieldOfView
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 60
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207842988}
+        m_TargetAssemblyTypeName: AspectRatioEvents, Assembly-CSharp
+        m_MethodName: AdjustRectTransformPositionX
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: -700
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207842988}
+        m_TargetAssemblyTypeName: AspectRatioEvents, Assembly-CSharp
+        m_MethodName: AdjustCameraRotationX
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 15
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnUltraWide:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1450258900}
+        m_TargetAssemblyTypeName: UnityEngine.Camera, UnityEngine
+        m_MethodName: set_fieldOfView
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 40
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207842988}
+        m_TargetAssemblyTypeName: AspectRatioEvents, Assembly-CSharp
+        m_MethodName: AdjustRectTransformPositionX
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: -900
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207842988}
+        m_TargetAssemblyTypeName: AspectRatioEvents, Assembly-CSharp
+        m_MethodName: AdjustCameraRotationX
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 13.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnVeryWide:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1450258900}
+        m_TargetAssemblyTypeName: UnityEngine.Camera, UnityEngine
+        m_MethodName: set_fieldOfView
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 30
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207842988}
+        m_TargetAssemblyTypeName: AspectRatioEvents, Assembly-CSharp
+        m_MethodName: AdjustRectTransformPositionX
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: -1200
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1207842988}
+        m_TargetAssemblyTypeName: AspectRatioEvents, Assembly-CSharp
+        m_MethodName: AdjustCameraRotationX
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 12
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  targetUI: {fileID: 448785283}
+  targetCameraToRotate: {fileID: 1450258900}
+--- !u!4 &1207842989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207842986}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1208270550
 GameObject:
   m_ObjectHideFlags: 0
@@ -7291,13 +7477,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450258897}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1219039, y: 0.43628252, z: -0.05979099, w: 0.88950664}
+  m_LocalRotation: {x: 0.117189005, y: 0.43659496, z: -0.057478797, w: 0.89013916}
   m_LocalPosition: {x: -39.358948, y: -11.231477, z: -20.689264}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 12.102, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 52.254, z: 0}
 --- !u!114 &1450258902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7305,7 +7491,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450258897}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1636e1f86f32f24f856a920213ebd73, type: 3}
   m_Name: 
@@ -9038,3 +9224,4 @@ SceneRoots:
   - {fileID: 203844589}
   - {fileID: 809355627}
   - {fileID: 1450258901}
+  - {fileID: 1207842989}

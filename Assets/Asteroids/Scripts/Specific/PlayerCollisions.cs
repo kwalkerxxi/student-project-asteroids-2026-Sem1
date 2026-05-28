@@ -16,10 +16,12 @@ public class PlayerCollisions : MonoBehaviour
             particleHolder = new GameObject("Particle Holder - Players");
         }
     }
-    
+
     private void OnCollisionEnter(Collision collision)
-    {        
-        if (collision.gameObject.CompareTag("Asteroid"))
+    {
+        if(collision.gameObject.CompareTag("Asteroid")
+            || collision.gameObject.CompareTag("Enemy")
+            || collision.gameObject.CompareTag("EnemyBullet"))
         {
             Die();
         }
@@ -27,7 +29,9 @@ public class PlayerCollisions : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.CompareTag("Asteroid"))
+        if(collision.gameObject.CompareTag("Asteroid")
+            || collision.gameObject.CompareTag("Enemy")
+            || collision.gameObject.CompareTag("EnemyBullet"))
         {
             Die();
         }

@@ -1,0 +1,40 @@
+{
+    "name": "KonamiCodeMapping",
+    "maps": [
+        {
+            "name": "KonamiCode",
+            "id": "af129efe-7c18-4f3e-a671-416c46eb341e",
+            "actions": [
+                {
+                    "name": "KonamiCode",
+                    "type": "Button",
+                    "id": "10b0c64f-ebe7-4011-867f-bf8f7ea24f6c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "87a9b010-ec0b-4f03-967e-f16b8a57b61e",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KonamiCode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "KonamiCode",
+            "bindingGroup": "KonamiCode",
+            "devices": []
+        }
+    ]
+}

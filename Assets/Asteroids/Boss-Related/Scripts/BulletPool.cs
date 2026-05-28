@@ -1,6 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Splines;
+using static UnityEngine.ParticleSystem;
 
 public class BulletPool : MonoBehaviour
 {
@@ -55,7 +58,7 @@ public class BulletPool : MonoBehaviour
         List<GameObject> bullets = new();
 
         // Create bullets
-        for (int i = 0; i < defaultCapacity; i++)
+        for(int i = 0; i < defaultCapacity; i++)
         {
             GameObject bullet = pool.Get();
 
@@ -63,7 +66,7 @@ public class BulletPool : MonoBehaviour
         }
 
         // Return bullets
-        foreach (GameObject bullet in bullets)
+        foreach(GameObject bullet in bullets)
         {
             pool.Release(bullet);
         }
@@ -73,7 +76,7 @@ public class BulletPool : MonoBehaviour
     private void OnDestroy()
     {
         // Remove from registry if destroyed
-        if (
+        if(
             RegisteredPools.TryGetValue(
                 poolType,
                 out BulletPool registeredPool
@@ -98,11 +101,11 @@ public class BulletPool : MonoBehaviour
 
     private GameObject CreateBullet()
     {
-        GameObject bullet = Instantiate(bulletPrefab);
+        GameObject bullet = Instantiate(bulletPrefab, transform);
 
         bullet.SetActive(false);
 
-        if (!bullet.TryGetComponent<PooledBullet>(out _))
+        if(!bullet.TryGetComponent<PooledBullet>(out _))
         {
             bullet.AddComponent<PooledBullet>();
         }
@@ -120,12 +123,22 @@ public class BulletPool : MonoBehaviour
         bullet.transform.position = Vector3.zero;
         bullet.transform.rotation = Quaternion.identity;
 
-        if (bullet.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
+        if(bullet.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
         {
             rigidbody.linearVelocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
 
             rigidbody.Sleep();
+        }
+
+        TrailRenderer[] allTrails = bullet.GetComponentsInChildren<TrailRenderer>();
+
+        foreach(TrailRenderer trail in allTrails)
+        {
+            trail.emitting = false;
+            trail.Clear();
+
+            trail.transform.position = Vector3.zero;
         }
 
         bullet.SetActive(false);
@@ -148,22 +161,54 @@ public class BulletPool : MonoBehaviour
         bullet.transform.position = position;
         bullet.transform.rotation = rotation;
 
-        if (
-            bullet.TryGetComponent<PooledBullet>(
-                out PooledBullet pooledBullet
-            )
-        )
+        if(bullet.TryGetComponent<PooledBullet>(out PooledBullet pooledBullet))
         {
             pooledBullet.SetPool(this);
         }
 
-        if (bullet.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
+        if(bullet.TryGetComponent<Rigidbody>(out Rigidbody rigidbody))
         {
-            rigidbody.linearVelocity =
-                direction.normalized * bulletSpeed;
+            rigidbody.linearVelocity = direction.normalized * bulletSpeed;
+        }
+
+        TrailRenderer[] allTrails = bullet.GetComponentsInChildren<TrailRenderer>();
+
+        foreach(TrailRenderer trail in allTrails)
+        {
+            ResetTrailInstant(trail, position);
         }
 
         return bullet;
+    }
+
+    private static void ResetTrailInstant(TrailRenderer trail, Vector3 newPos)
+    {
+        float originalTime = trail.time;
+
+        // Instantly clears all internal points
+        trail.time = 0f;
+        trail.Clear();
+
+        // Move the object BEFORE restoring time
+        trail.transform.position = newPos;
+
+        // Restore normal trail duration
+        trail.time = originalTime;
+
+        // Ensure it starts emitting immediately
+        trail.emitting = true;
+    }
+
+    public IEnumerator ResetTrail(TrailRenderer trail, Vector3 newPos)
+    {
+        trail.emitting = false;
+        trail.Clear();
+
+        // Wait one frame so Unity fully clears internal positions
+        yield return null;
+
+        trail.transform.position = newPos;
+        trail.emitting = true;
     }
 
     public void ReturnBullet(GameObject bullet)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// This class contains helper methods to postion objects on the screen
@@ -12,6 +13,21 @@ public static class ScreenPositionUtility
         Left,
         Right
     }
+
+    [System.Flags]
+    public enum SpawnAxis
+    {
+        LEFT = 1 << 0, // 1
+        RIGHT = 1 << 1, // 2
+        UP = 1 << 2, // 4
+        DOWN = 1 << 3, // 8
+
+        HORIZONTAL = LEFT | RIGHT,   // 3
+        VERTICAL = UP | DOWN,      // 12
+
+        ANY = LEFT | RIGHT | UP | DOWN
+    }
+
 
     /// <summary>
     /// Returns a random world position within the camera's visible area at a fixed Y height.
@@ -80,7 +96,61 @@ public static class ScreenPositionUtility
         return Vector3.zero;
     }
 
-    public static Vector3 GetRandomOffScreenPosition(Camera cameraToUse, float fixedY, float offscreenPercent = 0.1f)
+    //public static Vector3 GetRandomOffScreenPosition(Camera cameraToUse, float fixedY, float offscreenPercent = 0.1f)
+    //{
+    //    if(cameraToUse == null)
+    //    {
+    //        Debug.LogError("Camera is null in GetRandomOffScreenPosition.");
+    //        return Vector3.zero;
+    //    }
+
+    //    // offscreenPercent = how far outside the screen to spawn (0.1 = 10% outside)
+    //    float min = 0f - offscreenPercent;
+    //    float max = 1f + offscreenPercent;
+
+    //    // Choose a side: 0 = left, 1 = right, 2 = bottom, 3 = top
+    //    int side = Random.Range(0, 4);
+
+    //    Vector3 viewportPoint = Vector3.zero;
+
+    //    switch(side)
+    //    {
+    //        case 0: // Left
+    //            viewportPoint = new Vector3(min, Random.Range(0f, 1f), 0f);
+    //            break;
+
+    //        case 1: // Right
+    //            viewportPoint = new Vector3(max, Random.Range(0f, 1f), 0f);
+    //            break;
+
+    //        case 2: // Bottom
+    //            viewportPoint = new Vector3(Random.Range(0f, 1f), min, 0f);
+    //            break;
+
+    //        case 3: // Top
+    //            viewportPoint = new Vector3(Random.Range(0f, 1f), max, 0f);
+    //            break;
+    //    }
+
+    //    // Raycast from camera to plane at fixedY
+    //    Plane groundPlane = new Plane(Vector3.up, new Vector3(0, fixedY, 0));
+    //    Ray ray = cameraToUse.ViewportPointToRay(viewportPoint);
+
+    //    if(groundPlane.Raycast(ray, out float enter))
+    //    {
+    //        return ray.GetPoint(enter);
+    //    }
+
+    //    return Vector3.zero;
+    //}
+
+
+
+    public static Vector3 GetRandomOffScreenPosition(
+      Camera cameraToUse,
+      float fixedY,
+      float offscreenPercent = 0.1f,
+      SpawnAxis axis = SpawnAxis.ANY)
     {
         if(cameraToUse == null)
         {
@@ -88,12 +158,39 @@ public static class ScreenPositionUtility
             return Vector3.zero;
         }
 
-        // offscreenPercent = how far outside the screen to spawn (0.1 = 10% outside)
         float min = 0f - offscreenPercent;
         float max = 1f + offscreenPercent;
 
-        // Choose a side: 0 = left, 1 = right, 2 = bottom, 3 = top
-        int side = Random.Range(0, 4);
+        // Build allowed sides list based on flags
+        List<int> allowedSides = new List<int>();
+
+        if(axis.HasFlag(SpawnAxis.LEFT))
+        {
+            allowedSides.Add(0);
+        }
+
+        if(axis.HasFlag(SpawnAxis.RIGHT))
+        {
+            allowedSides.Add(1);
+        }
+
+        if(axis.HasFlag(SpawnAxis.DOWN))
+        {
+            allowedSides.Add(2);
+        }
+
+        if(axis.HasFlag(SpawnAxis.UP))
+        {
+            allowedSides.Add(3);
+        }
+
+        // Safety: if user passed NONE (0), fallback to ANY
+        if(allowedSides.Count == 0)
+        {
+            allowedSides.AddRange(new[] { 0, 1, 2, 3 });
+        }
+
+        int side = allowedSides[Random.Range(0, allowedSides.Count)];
 
         Vector3 viewportPoint = Vector3.zero;
 
@@ -116,7 +213,6 @@ public static class ScreenPositionUtility
                 break;
         }
 
-        // Raycast from camera to plane at fixedY
         Plane groundPlane = new Plane(Vector3.up, new Vector3(0, fixedY, 0));
         Ray ray = cameraToUse.ViewportPointToRay(viewportPoint);
 
@@ -127,6 +223,7 @@ public static class ScreenPositionUtility
 
         return Vector3.zero;
     }
+
 
 
     public static Vector3 GetOffScreenPositionIndexed(
