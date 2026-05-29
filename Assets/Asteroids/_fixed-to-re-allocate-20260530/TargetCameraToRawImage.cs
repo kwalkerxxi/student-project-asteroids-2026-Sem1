@@ -19,6 +19,12 @@ public class TargetCameraToRawImage
     [SerializeField] bool usePrefabInstance = false;
     Transform pivotPointTransform;
     [SerializeField] float rotationSpeed = 45f;
+
+    private GameObject cameraHolder;
+    private void Awake()
+    {
+        cameraHolder = new GameObject("Temporary Thumbnail Cameras");
+    }
     public void Initialize(GameObject objectToRender, RawImage rawImageToRenderTo)
     {
         targetImage = rawImageToRenderTo;
@@ -26,6 +32,8 @@ public class TargetCameraToRawImage
         // Create camera
         dynamicTemporaryCamera = new GameObject("ThumbnailCamera").AddComponent<Camera>();
         dynamicTemporaryCamera.clearFlags = CameraClearFlags.Nothing;
+
+        dynamicTemporaryCamera.transform.SetParent(cameraHolder.transform);
         //dynamicTemporaryCamera.backgroundColor = Color.clear;
         //dynamicTemporaryCamera.clearFlags = CameraClearFlags.SolidColor;
         //dynamicTemporaryCamera.backgroundColor = new Color(0, 0, 0, 0);
