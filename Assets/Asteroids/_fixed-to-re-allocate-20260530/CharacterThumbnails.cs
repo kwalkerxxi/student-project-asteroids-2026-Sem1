@@ -10,22 +10,15 @@ public class ThumbnailData
 
 public class CharacterThumbnails : MonoBehaviour
 {
-    //[SerializeField] private ThumbnailData[] thumbnails;
+    [SerializeField] private ThumbnailData[] thumbnails;
 
-    //// Start is called once before the first execution of Update after the MonoBehaviour is created
-    //void Start()
-    //{
-    //    foreach(var thumbnail in thumbnails)
-    //    {
-    //        thumbnail.rawImage.texture = ThumbnailRenderer.RenderThumbnail(thumbnail.thumbnailObject);
-    //    }
-    //}
-
-    public ThumbnailRig rig;
-    public GameObject prefab;
+    [SerializeField] private TargetCameraToRawImage targetCameraToThumbnails;
 
     void Start()
     {
-        rig.Initialize(prefab);
+        foreach(var thumbnail in thumbnails)
+        {
+            targetCameraToThumbnails.Initialize(thumbnail.thumbnailObject, thumbnail.rawImage);
+        }
     }
 }
