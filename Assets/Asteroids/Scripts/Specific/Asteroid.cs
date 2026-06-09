@@ -20,6 +20,24 @@ public class Asteroid : MonoBehaviour
     public float maxAngularSpeed = 90f; // Maximum angular speed in degrees/sec
 
     public bool spawnWithAngularVelocity = false;
+
+    public void Pause()
+    {
+        cachedRigidbody.linearVelocity = Vector3.zero;
+    }
+
+    Vector3 speedForward;
+    public void Unpause()
+    {
+        cachedRigidbody.linearVelocity = speedForward;
+    }
+
+    public void TurnLeft()
+    {
+        transform.Rotate(0f, -90f, 0f, Space.Self);
+        speedForward = transform.forward * speedForward.magnitude;
+    }
+
     private void Start()
     {
 
@@ -38,7 +56,8 @@ public class Asteroid : MonoBehaviour
             randomDirection = transform.forward;
         }
 
-        cachedRigidbody.linearVelocity = randomDirection * randomSpeed;
+        speedForward = randomDirection * randomSpeed;
+        cachedRigidbody.linearVelocity = speedForward;
 
         if(spawnWithAngularVelocity)
         {
