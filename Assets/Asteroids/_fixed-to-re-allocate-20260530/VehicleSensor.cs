@@ -25,6 +25,27 @@ public class VehicleSensor : MonoBehaviour
     [SerializeField]
     float pauseTime = -1;
 
+    bool isImpatient = false;
+
+    [SerializeField]
+    bool isOffAxis = false;
+
+    int randomBoostTimeWhenImpatient = 600;
+
+    private void Start()
+    {
+        randomBoostTimeWhenImpatient = Random.Range(60 * 10, 60 * 15);
+    }
+    public static bool IsCardinalRotationY(Transform transform, float tolerance = 0.1f)
+    {
+        float y = transform.eulerAngles.y;
+
+        return Mathf.Abs(y - 0f) < tolerance ||
+               Mathf.Abs(y - 90f) < tolerance ||
+               Mathf.Abs(y - 180f) < tolerance ||
+               Mathf.Abs(y - 270f) < tolerance;
+    }
+
 
     private void Update()
     {
@@ -33,12 +54,22 @@ public class VehicleSensor : MonoBehaviour
             return;
         }
 
-        if(Time.time > pauseTime + 20)
+        isOffAxis = !IsCardinalRotationY(transform, 5f);
+
+        if((Time.time > pauseTime + 15 || isOffAxis) && !isImpatient)
         {
-            GetComponentInParent<Asteroid>().Unpause();
-            GetComponentInParent<Rigidbody>().AddForce(transform.forward, ForceMode.Impulse);
+            isImpatient = true;
+            gameObject.GetComponent<Collider>().enabled = false;
+            GetComponentInParent<Asteroid>().Pause();
+            GetComponentInParent<Rigidbody>().AddForce(transform.forward * 2, ForceMode.Impulse);
             //ClosestVehicleAhead = null;
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            //gameObject.GetComponentInParent<Health>().TakeDamage(999, null);
+        }
+
+        if(isImpatient && Time.frameCount % randomBoostTimeWhenImpatient == 0)
+        {
+            GetComponentInParent<Rigidbody>().AddForce(transform.forward * 2, ForceMode.Impulse);
         }
     }
     private void Check()

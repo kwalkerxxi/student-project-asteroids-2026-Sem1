@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 816767444434867784}
   - component: {fileID: 8497058222397590462}
   m_Layer: 11
-  m_Name: GameObject
+  m_Name: Nose Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,6 +70,7 @@ MonoBehaviour:
   <ClosestVehicleAhead>k__BackingField: {fileID: 0}
   zDiff: 10
   pauseTime: 0
+  isOffAxis: 0
 --- !u!1 &8869437590398849279
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +91,7 @@ GameObject:
   - component: {fileID: -8760025396461162996}
   - component: {fileID: 4567621391287023478}
   - component: {fileID: 2920065941164260879}
+  - component: {fileID: 8132825753387507433}
   m_Layer: 11
   m_Name: Enemy-Large
   m_TagString: Asteroid
@@ -257,6 +259,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  rb: {fileID: 0}
+  myCollider: {fileID: 0}
+  separationMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &1066302298478889683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,6 +347,24 @@ MonoBehaviour:
   - {fileID: 4334819743363910408}
   - {fileID: 5808604041949985062}
   frameBuffer: 5
+--- !u!114 &8132825753387507433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8869437590398849279}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9864f82dd69d7e4d814fc1e44b42a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSeparator
+  rb: {fileID: 0}
+  myCollider: {fileID: 0}
+  separationMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  maxSeparationDistance: 1
 --- !u!1001 &1268331543516516085
 PrefabInstance:
   m_ObjectHideFlags: 0

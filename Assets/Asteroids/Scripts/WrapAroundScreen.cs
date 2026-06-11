@@ -16,11 +16,87 @@ public class WrapAroundScreen : MonoBehaviour
 
     public UnityEvent OnWrap = new UnityEvent();
 
+    Vector3 warpTargetPosition;
+
+    public Rigidbody cachedRigidbody;
+    public Collider cachedCollider;
+    public LayerMask separationMask;
+
     void Start()
     {
         if(cameraToDetectWrapping == null)
         {
             cameraToDetectWrapping = Camera.main;
+        }
+
+        Time.timeScale = 5f;
+
+
+
+        if(cachedRigidbody == null)
+        {
+            cachedRigidbody = GetComponent<Rigidbody>();
+        }
+
+        if(cachedCollider == null)
+        {
+            cachedCollider = GetComponent<Collider>();
+        }
+    }
+
+
+    public void PreSeparate(Vector3 targetPosition)
+    {
+        // Temporarily move the collider to the target position
+        Vector3 originalPos = transform.position;
+        transform.position = targetPosition;
+
+        Collider[] hits = Physics.OverlapBox(
+            cachedCollider.bounds.center,
+            cachedCollider.bounds.extents,
+            transform.rotation,
+            separationMask
+        );
+
+        foreach(var hit in hits)
+        {
+            if(hit == cachedCollider)
+            {
+                continue;
+            }
+
+            Vector3 dir;
+            float dist;
+
+            if(Physics.ComputePenetration(
+                cachedCollider, transform.position, transform.rotation,
+                hit, hit.transform.position, hit.transform.rotation,
+                out dir, out dist))
+            {
+                targetPosition += dir * dist;
+            }
+        }
+
+        // Restore original position
+        transform.position = originalPos;
+
+        // Now move safely
+        cachedRigidbody.MovePosition(targetPosition);
+    }
+
+
+
+    void FixedUpdate()
+    {
+
+        if(WarpSpot)
+        {
+            Rigidbody myRigidbody = transform.GetComponent<Rigidbody>();
+
+            PreSeparate(warpTargetPosition);
+            //myRigidbody.MovePosition(warpTargetPosition);
+            WarpSpot = false;
+            OnWrap?.Invoke();
         }
     }
 
@@ -64,11 +140,10 @@ public class WrapAroundScreen : MonoBehaviour
             if(plane.Raycast(ray, out float distance))
             {
                 Vector3 hitPoint = ray.GetPoint(distance);
-                transform.position = hitPoint;
+                //transform.position = hitPoint;
+                warpTargetPosition = hitPoint;
             }
-            WarpSpot = false;
-
-            OnWrap?.Invoke();
+            //WarpSpot = false;
         }
     }
 }
