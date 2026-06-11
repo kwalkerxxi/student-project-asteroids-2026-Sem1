@@ -1,5 +1,7 @@
+using HamishDelaforce;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GodMode : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class GodMode : MonoBehaviour
     Renderer[] renderers;
         List<Renderer> rendererToChange = new List<Renderer>();
 
+    [SerializeField] GameObject shieldPrefab;
+    
     void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();
@@ -87,16 +91,30 @@ public class GodMode : MonoBehaviour
         collider.enabled = !collider.enabled;
     }
 
+    void ToggleShield(bool isInGodMode)
+    {
+        Transform shieldChild = transform.Find("ShieldHexSphere");
+
+        if (shieldChild != null)
+        {
+            shieldChild.gameObject.SetActive(isInGodMode);
+        }
+    }
+
     private void OnEnable()
     {
         Cheats.OnToggleGodMode += ToggleCollider;
-        Cheats.OnToggleGodMode += ToggleMataerials;
+        Cheats.OnToggleGodMode += ToggleShield;
+        PickUpManager.OnToggleGodMode += ToggleCollider;
+        PickUpManager.OnToggleGodMode += ToggleShield;
     }
 
     private void OnDisable()
     {
         Cheats.OnToggleGodMode -= ToggleCollider;
-        Cheats.OnToggleGodMode -= ToggleMataerials;
+        Cheats.OnToggleGodMode -= ToggleShield;
+        PickUpManager.OnToggleGodMode -= ToggleCollider;
+        PickUpManager.OnToggleGodMode -= ToggleShield;
 
     }
 }

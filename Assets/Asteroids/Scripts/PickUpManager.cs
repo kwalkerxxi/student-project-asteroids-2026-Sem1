@@ -1,54 +1,93 @@
 using System;
-using System.Threading;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
-
-public class PickUpManager : MonoBehaviour
+using HamishDelaforce;
+namespace HamishDelaforce
 {
-
-    private float Clock; // counts the second
-    [SerializeField] float PowerUpTime = 5f; // the time the Clock resets
-    bool Timer = false; // bool determines when Clock starts
-
-    // toggles the extra guns
-    public static Action<bool> OnToggleExtraGuns;
-    bool isUsingExtraGuns = false;
-
-    [SerializeField]
-    [TagField] string tagForMoreGuns;
-
-    private void Update() // updates every frame
+    // <summary>
+    // this script manages the Pick-ups when the player touches the pick-up by enabling
+    // the power-up corresponding with the pick-up's tag for a limited amount of time
+    // </Summary>
+    public class PickUpManager : MonoBehaviour
     {
-
-        if(Clock >= PowerUpTime) // check if Clock equals PowerUpTime
+        private float Clock;
+        // PowerUpTime determines the duration of the Power up
+        [SerializeField] float PowerUpTime = 5f;
+        bool timerIsActive = false;
+        public static Action<bool> OnToggleExtraGuns;
+        public static Action<bool> OnToggleGodMode;
+        bool isUsingExtraGuns = false;
+        bool isUsingInfiniteAmmo = false;
+        bool isInGodMode = false;
+        [SerializeField]
+        [TagField] string tagForMoreGuns;
+        [SerializeField]
+        [TagField] string tagForInfiniteAmmo;
+        [SerializeField]
+        [TagField] string tagForShield;
+        // when Clock equals PowerUpTime toggle the active Power up
+        private void Update()
         {
-            Timer = false; // stop the Timer
-            Clock = 0f; // reset Clock to 0
-
-            ToggleExtraGuns(); // disable Extra Guns
+            if (Clock >= PowerUpTime)
+            {
+                timerIsActive = false;
+                Clock = 0f;
+                if (isUsingExtraGuns == true)
+                {
+                    ToggleExtraGuns();
+                }
+                if (isUsingInfiniteAmmo == true)
+                {
+                    Cheats.OnToggleInfiniteBullets?.Invoke();
+                    isUsingInfiniteAmmo = false;
+                }
+                if (isInGodMode == true)
+                {
+                    ToggleShield();                    
+                }
+            }
+            // if timerIsActive is true start counting
+            else if (timerIsActive)
+            {
+                Clock += Time.deltaTime;
+            }
         }
-
-        else if(Timer == true) // check if Timer is true
+        // when entering trigger with the tag formoreguns toggle ExtraGuns and if tagforInfiniteAmmo toggle infinitebullets
+        // then starts timer and destroys the trigger
+        private void OnTriggerEnter(Collider whatWasHit)
         {
-            Clock += Time.deltaTime; // make clock start counting
+            if (whatWasHit.gameObject.CompareTag(tagForMoreGuns))
+            {
+                ToggleExtraGuns();
+                timerIsActive = true;
+                Destroy(whatWasHit.gameObject);
+            }
+            if (whatWasHit.gameObject.CompareTag(tagForInfiniteAmmo))
+            {
+                Cheats.OnToggleInfiniteBullets?.Invoke();
+                isUsingInfiniteAmmo = true;
+                timerIsActive = true;
+                Destroy(whatWasHit.gameObject);
+            }
+            if (whatWasHit.gameObject.CompareTag(tagForShield))
+            {
+                ToggleShield();
+                timerIsActive = true;
+                Destroy(whatWasHit.gameObject);
+            }
         }
-    }
-    private void OnTriggerEnter(Collider whatWasHit) // when player collides with object
-    {
-        if (whatWasHit.gameObject.CompareTag(tagForMoreGuns))// check if object tag matches
+        // toggles the extra guns
+        private void ToggleExtraGuns()
         {
-            ToggleExtraGuns(); // activate power up
-
-            Timer = true; // start Timer
-            Destroy(whatWasHit.gameObject); // destroy object
-        }
-    }
-
-    private void ToggleExtraGuns() // this toggles the extra guns
-    {
             isUsingExtraGuns = !isUsingExtraGuns;
             OnToggleExtraGuns?.Invoke(isUsingExtraGuns);
-    }
+        }
 
+        private void ToggleShield()
+        {
+            isInGodMode = !isInGodMode;
+            OnToggleGodMode?.Invoke(isInGodMode);
+        }
+
+    }
 }

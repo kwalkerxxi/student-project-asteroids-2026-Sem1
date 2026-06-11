@@ -206,6 +206,11 @@ public class LaneSpawner : MonoBehaviour
     // ------------------------------------------------
     void Start()
     {
+        Invoke(nameof(InitialiseSpawning), 1);
+    }
+
+    void InitialiseSpawning()
+    {
         //InvokeRepeating(nameof(SpawnRandom), 1f, 2f);
 
         SpawnSpots();
@@ -263,7 +268,7 @@ public class LaneSpawner : MonoBehaviour
         foreach(var pos in lanes)
         {
             GameObject obj = Instantiate(prefab, pos, Quaternion.identity);
-            obj.transform.localScale *= 0.5f;
+            obj.transform.localScale *= 1f;
 
             WrapCollisionFixer.LargeAsteroids.Add(obj.transform);
 

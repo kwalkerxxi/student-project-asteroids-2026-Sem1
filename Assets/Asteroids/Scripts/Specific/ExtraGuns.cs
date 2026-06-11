@@ -1,3 +1,4 @@
+using HamishDelaforce;
 using System;
 using UnityEngine;
 
@@ -16,12 +17,14 @@ public class ExtraGuns : MonoBehaviour
     {
         Cheats.OnToggleExtraGuns += ToggleGuns;
         PickUpManager.OnToggleExtraGuns += ToggleGuns;
+        
     }
 
     private void OnDisable()
     {
         Cheats.OnToggleExtraGuns -= ToggleGuns;
         PickUpManager.OnToggleExtraGuns -= ToggleGuns;
+        
     }
 
     private void ToggleGuns(bool showGuns)

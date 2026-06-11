@@ -12,8 +12,8 @@ public class SimpleTimer : MonoBehaviour
     /// <summary>
     /// The length of the timer in seconds.
     /// </summary>
-    [SerializeField] private float duration = 5f;
-
+    [SerializeField] private float durationToSpawn = 5f;
+    
     /// <summary>
     /// If true, the timer will automatically start on Start().
     /// </summary>
@@ -57,13 +57,14 @@ public class SimpleTimer : MonoBehaviour
 
             if (loop)
             {
-                timer = duration;
+                timer = durationToSpawn;
             }
             else
             {
                 isRunning = false;
             }
         }
+
     }
 
     /// <summary>
@@ -71,7 +72,7 @@ public class SimpleTimer : MonoBehaviour
     /// </summary>
     public void StartTimer()
     {
-        timer = duration;
+        timer = durationToSpawn;
         isRunning = true;
     }
 
@@ -89,6 +90,6 @@ public class SimpleTimer : MonoBehaviour
     /// </summary>
     public void ResetTimer()
     {
-        timer = duration;
+        timer = durationToSpawn;
     }
 }

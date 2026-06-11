@@ -32,7 +32,7 @@ public class FakeGamepadInputSpecificTests : MonoBehaviour
         }
 
         // final button east
-        // pressSequence.AppendCallback(PressButtonEast);
+        pressSequence.AppendCallback(PressButtonEast);
     }
 
     [ProPlayButton]
