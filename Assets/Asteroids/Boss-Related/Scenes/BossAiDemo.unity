@@ -1714,6 +1714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1905513217}
   - component: {fileID: 1905513216}
+  - component: {fileID: 1905513218}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -1733,7 +1734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec354cbdb77a7be4cb213362902f1d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LaneSpawner
-  amountOfShipsToSpawn: 26
+  amountOfShipsToSpawn: 13
   leftTopLanes: 5
   topRightLanes: 8
   rightBottomLanes: 5
@@ -1755,6 +1756,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1905513218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905513215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0462cced355c843a12e84b5f684fbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WrapCollisionFixer
+  timeScaleForChecking: 1
+  colorToUse: {r: 0.4, g: 0.2, b: 0.6, a: 1}
+  radiusToCheck: 0.7
+  normalColor: {r: 1, g: 0, b: 1, a: 1}
+  overlapColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

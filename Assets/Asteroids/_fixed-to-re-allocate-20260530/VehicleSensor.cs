@@ -72,6 +72,13 @@ public class VehicleSensor : MonoBehaviour
             GetComponentInParent<Rigidbody>().AddForce(transform.forward * 2, ForceMode.Impulse);
         }
     }
+
+    private void FixedUpdate()
+    {
+        GetComponentInParent<Rigidbody>().ClampLinearVelocity(2);
+        GetComponentInParent<Rigidbody>().ClampAngularVelocity(2);
+    }
+
     private void Check()
     {
         ClosestVehicleAhead = null;

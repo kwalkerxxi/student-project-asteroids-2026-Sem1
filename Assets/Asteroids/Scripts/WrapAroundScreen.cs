@@ -29,60 +29,60 @@ public class WrapAroundScreen : MonoBehaviour
             cameraToDetectWrapping = Camera.main;
         }
 
-        Time.timeScale = 5f;
 
 
 
-        if(cachedRigidbody == null)
-        {
-            cachedRigidbody = GetComponent<Rigidbody>();
-        }
 
-        if(cachedCollider == null)
-        {
-            cachedCollider = GetComponent<Collider>();
-        }
+        //if(cachedRigidbody == null)
+        //{
+        //    cachedRigidbody = GetComponent<Rigidbody>();
+        //}
+
+        //if(cachedCollider == null)
+        //{
+        //    cachedCollider = GetComponent<Collider>();
+        //}
     }
 
 
-    public void PreSeparate(Vector3 targetPosition)
-    {
-        // Temporarily move the collider to the target position
-        Vector3 originalPos = transform.position;
-        transform.position = targetPosition;
+    //public void PreSeparate(Vector3 targetPosition)
+    //{
+    //    // Temporarily move the collider to the target position
+    //    Vector3 originalPos = transform.position;
+    //    transform.position = targetPosition;
 
-        Collider[] hits = Physics.OverlapBox(
-            cachedCollider.bounds.center,
-            cachedCollider.bounds.extents,
-            transform.rotation,
-            separationMask
-        );
+    //    Collider[] hits = Physics.OverlapBox(
+    //        cachedCollider.bounds.center,
+    //        cachedCollider.bounds.extents,
+    //        transform.rotation,
+    //        separationMask
+    //    );
 
-        foreach(var hit in hits)
-        {
-            if(hit == cachedCollider)
-            {
-                continue;
-            }
+    //    foreach(var hit in hits)
+    //    {
+    //        if(hit == cachedCollider)
+    //        {
+    //            continue;
+    //        }
 
-            Vector3 dir;
-            float dist;
+    //        Vector3 dir;
+    //        float dist;
 
-            if(Physics.ComputePenetration(
-                cachedCollider, transform.position, transform.rotation,
-                hit, hit.transform.position, hit.transform.rotation,
-                out dir, out dist))
-            {
-                targetPosition += dir * dist;
-            }
-        }
+    //        if(Physics.ComputePenetration(
+    //            cachedCollider, transform.position, transform.rotation,
+    //            hit, hit.transform.position, hit.transform.rotation,
+    //            out dir, out dist))
+    //        {
+    //            targetPosition += dir * dist;
+    //        }
+    //    }
 
-        // Restore original position
-        transform.position = originalPos;
+    //    // Restore original position
+    //    transform.position = originalPos;
 
-        // Now move safely
-        cachedRigidbody.MovePosition(targetPosition);
-    }
+    //    // Now move safely
+    //    cachedRigidbody.MovePosition(targetPosition);
+    //}
 
 
 
@@ -93,8 +93,8 @@ public class WrapAroundScreen : MonoBehaviour
         {
             Rigidbody myRigidbody = transform.GetComponent<Rigidbody>();
 
-            PreSeparate(warpTargetPosition);
-            //myRigidbody.MovePosition(warpTargetPosition);
+            //PreSeparate(warpTargetPosition);
+            myRigidbody.MovePosition(warpTargetPosition);
             WarpSpot = false;
             OnWrap?.Invoke();
         }

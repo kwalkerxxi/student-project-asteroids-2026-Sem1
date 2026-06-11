@@ -265,6 +265,8 @@ public class LaneSpawner : MonoBehaviour
             GameObject obj = Instantiate(prefab, pos, Quaternion.identity);
             obj.transform.localScale *= 0.5f;
 
+            WrapCollisionFixer.LargeAsteroids.Add(obj.transform);
+
             // Determine which side of the screen this lane is on
             float distLeft = Mathf.Abs(pos.x - minX);
             float distRight = Mathf.Abs(pos.x - maxX);
