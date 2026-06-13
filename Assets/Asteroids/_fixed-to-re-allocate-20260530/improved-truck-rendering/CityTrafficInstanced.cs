@@ -10,7 +10,6 @@ namespace Riley.Scripts
 
         [Header("Rendering")]
         [SerializeField] private Mesh truckMesh;
-        [SerializeField] private Material truckMaterial;
         [SerializeField] Material[] truckMaterials;
         [SerializeField] private float truckScale = 1f;
 
@@ -28,8 +27,6 @@ namespace Riley.Scripts
         private Truck[] trucks;
         private Matrix4x4[] matrices;
 
-        //private RenderParams renderParams;
-
         [SerializeField]
         private RenderParams[] submeshParams;
 
@@ -46,13 +43,6 @@ namespace Riley.Scripts
 
 
             InitializeTraffic();
-
-            //renderParams = new RenderParams(truckMaterial)
-            //{
-            //    shadowCastingMode = ShadowCastingMode.On,
-            //    receiveShadows = true,
-            //    layer = gameObject.layer
-            //};
 
             submeshParams = new RenderParams[truckMesh.subMeshCount];
 
@@ -107,45 +97,6 @@ namespace Riley.Scripts
         {
             UpdateTraffic();
 
-            //Graphics.RenderMeshInstanced(
-            //    renderParams,
-            //    truckMesh,
-            //    0,
-            //    matrices,
-            //    matrices.Length);
-
-            //for(int submesh = 0; submesh < truckMesh.subMeshCount; submesh++)
-            //{
-            //    Graphics.RenderMeshInstanced(
-            //        renderParams,
-            //        truckMesh,
-            //        submesh,
-            //        matrices,
-            //        matrices.Length);
-            //}
-
-            //for(int submesh = 0; submesh < truckMesh.subMeshCount; submesh++)
-            //{
-            //    //renderParams.material = truckMaterials[submesh];
-            //    Material materialToUse = truckMaterials[submesh];
-            //    renderParams.material = materialToUse;
-            //    renderParams = new RenderParams(materialToUse)
-            //    {
-            //        shadowCastingMode = ShadowCastingMode.On,
-            //        receiveShadows = true,
-            //        layer = renderLayer
-            //    };
-
-            //    renderParams.layer = LayerMask.NameToLayer(renderLayerName);
-
-            //    Graphics.RenderMeshInstanced(
-            //        renderParams,
-            //        truckMesh,
-            //        submesh,
-            //        matrices,
-            //        matrices.Length);
-            //}
-
             for(int submesh = 0; submesh < truckMesh.subMeshCount; submesh++)
             {
                 Graphics.RenderMeshInstanced(
@@ -185,10 +136,6 @@ namespace Riley.Scripts
                         ? Quaternion.LookRotation(tangent)
                         : Quaternion.identity;
 
-                //matrices[i] = Matrix4x4.TRS(
-                //    position,
-                //    rotation,
-                //    Vector3.one);
 
                 matrices[i] = Matrix4x4.TRS(
                     position,

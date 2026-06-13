@@ -2,3 +2,6 @@ L = while mouse is over the object
 
 SHIFT + H = Isolate
 ALT + H = Reveal
+
+https://docs.blender.org/manual/en/latest/scene_layout/object/selecting.html
+https://www.youtube.com/watch?v=5Itvqkuv7no

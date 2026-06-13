@@ -9,12 +9,17 @@ public class PlayerCollisions : MonoBehaviour
     private static GameObject particleHolder;
     public UnityEvent OnDied;
 
+    [SerializeField] GameStartAndGameOver gameStartAndGameOver;
     private void Start()
     {
         if(particleHolder == null)
         {
             particleHolder = new GameObject("Particle Holder - Players");
         }
+
+
+        gameStartAndGameOver = GameObject.FindAnyObjectByType<GameStartAndGameOver>();
+        gameStartAndGameOver.RegisterPlayer(this);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -41,20 +46,25 @@ public class PlayerCollisions : MonoBehaviour
     {
         OnDied?.Invoke();
 
-        PlayerInput playerInput = GetComponent<PlayerInput>();
+        // GetComponent<PlayerInput>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        GetComponent<PlayerScore>().DisableScore();
 
-        foreach(var device in playerInput.devices)
-        {
-            if(device is Keyboard || device is Mouse)
-            {
-                DisableKeyboardJoining.isKeyboardJoingingAllowed = false;
-                continue; // skip keyboard & mouse
-            }
-            InputSystem.DisableDevice(device);
-            // Debug.Log($"{device.displayName} disabled");
-        }
+        //PlayerInput playerInput = GetComponent<PlayerInput>();
 
+        //foreach(var device in playerInput.devices)
+        //{
+        //    if(device is Keyboard || device is Mouse)
+        //    {
+        //        DisableKeyboardJoining.isKeyboardJoingingAllowed = false;
+        //        continue; // skip keyboard & mouse
+        //    }
+        //    InputSystem.DisableDevice(device);
+        //    // Debug.Log($"{device.displayName} disabled");
+        //}
 
+        TransformUtils.DeleteChildren(transform, false);
         if(ParticleSystemOnDeath != null)
         {
             GameObject deathParticleSystem = Instantiate(ParticleSystemOnDeath, particleHolder.transform);
@@ -63,6 +73,6 @@ public class PlayerCollisions : MonoBehaviour
         }
 
 
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

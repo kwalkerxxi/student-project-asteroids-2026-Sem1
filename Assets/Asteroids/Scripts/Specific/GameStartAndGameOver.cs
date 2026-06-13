@@ -14,6 +14,11 @@ public class GameStartAndGameOver : MonoBehaviour
 
     [SerializeField] UnityEvent OnGameEnded;
     bool isRestarting = false;
+
+    float timer = 0;
+    [SerializeField] float restartWaitTime = 4;
+    [SerializeField] TextMeshProUGUI gameStartAndEndTextboxCountDown;
+    [SerializeField] QuickTweenScores quickTweenScores;
     private void Start()
     {
         ReEnableAllDevices();
@@ -37,28 +42,53 @@ public class GameStartAndGameOver : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    private void CountDownToRestart()
+    {
+        timer -= Time.deltaTime;
+        gameStartAndEndTextboxCountDown.text = timer.ToString("N0");
+    }
+
+
+    public void OnPlayerDied()
+    {
+        playersLeft--;
+        Mathf.Clamp(playersLeft, 0, 10);
+    }
+
+    public void RegisterPlayer(PlayerCollisions player)
+    {
+        player.OnDied.AddListener(OnPlayerDied);
+    }
+
     void Update()
     {
         if(isRestarting)
         {
+            CountDownToRestart();
             return;
         }
 
-        playersLeft = PlayerInputManager.instance.playerCount;
+        //playersLeft = PlayerInputManager.instance.playerCount;
 
         if(playersJoined > 0 && playersLeft <= 0)
         {
             if(gameStartAndEndTextbox != null)
             {
-                gameStartAndEndTextbox.text = $"Game Over! This game had {playersJoined} players in the session.";
-                gameStartAndEndTextbox.text += $"\nAll have died.";
+                //gameStartAndEndTextbox.text = $"Game Over! This game had {playersJoined} players in the session.";
+                //gameStartAndEndTextbox.text += $"\nAll have died.";
+                //gameStartAndEndTextbox.text += $"\nScene will reload and Inputs will be";
+                //gameStartAndEndTextbox.text += $"\nre-enabled in 4 seconds.";
+                gameStartAndEndTextbox.text = $"Game Over!";
+                gameStartAndEndTextbox.text += $"\nAll players have died.";
                 gameStartAndEndTextbox.text += $"\nScene will reload and Inputs will be";
                 gameStartAndEndTextbox.text += $"\nre-enabled in 4 seconds.";
 
             }
             isRestarting = true;
             OnGameEnded?.Invoke();
-            Invoke(nameof(ReloadScene), 4f);
+            Invoke(nameof(ReloadScene), restartWaitTime);
+            timer = restartWaitTime;
+            quickTweenScores.GrowScores();
         }
         else
         {
@@ -75,6 +105,7 @@ public class GameStartAndGameOver : MonoBehaviour
     public void PlayerAdded(PlayerInput input)
     {
         playersJoined++;
+        playersLeft++;
     }
 
 

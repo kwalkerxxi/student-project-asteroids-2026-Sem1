@@ -12,6 +12,7 @@ public class PlayerScoreUI : MonoBehaviour
     {
         playerScore = scoreScript;
         playerScore.OnScoreChanged += UpdateScore;
+        playerScore.OnScoreDisable += UpdateColor;
 
         gameObject.SetActive(true);
         scoreText = GetComponent<TextMeshProUGUI>();
@@ -32,6 +33,23 @@ public class PlayerScoreUI : MonoBehaviour
         {
             playerScore.OnScoreChanged -= UpdateScore;
         }
+    }
+
+    void UpdateColor(int playerIndex)
+    {
+
+        scoreText.color = Color.red;
+        // Face color (RGBA)
+        scoreText.faceColor = new Color32(255, 0, 0, 128);   // Semi-transparent red
+
+        // Outline color (RGBA)
+        //scoreText.outlineColor = new Color32(0, 0, 0, 200);  // Mostly opaque black
+
+        // Outline thickness (0–1 typically)
+        //scoreText.outlineWidth = 0.2f;
+
+        scoreText.text = $"X-" + scoreText.text;
+        this.enabled = false;
     }
 
     void UpdateScore(int playerIndex, int newScore)
