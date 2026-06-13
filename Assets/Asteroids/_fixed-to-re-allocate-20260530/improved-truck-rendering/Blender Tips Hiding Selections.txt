@@ -1,0 +1,4 @@
+L = while mouse is over the object
+
+SHIFT + H = Isolate
+ALT + H = Reveal

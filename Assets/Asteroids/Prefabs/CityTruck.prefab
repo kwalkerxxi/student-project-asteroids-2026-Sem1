@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7387182508651210744}
   - component: {fileID: 308217047559340188}
   - component: {fileID: 4125649428903089645}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: CityTruck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
