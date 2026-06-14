@@ -15,7 +15,8 @@ public class KonamiCode : MonoBehaviour
 
     public UnityEvent OnSuccess;
 
-    
+    [SerializeField] bool showDebugLogs = false;
+
     private string[] expectedInputs = new string[]
     {
         "Up", "Up", "Down", "Down", "Left", "Right", "Left", "Right", "B", "A"
@@ -49,11 +50,11 @@ public class KonamiCode : MonoBehaviour
 
     private void Update()
     {
-        if (timer > 0)
+        if(timer > 0)
         {
             timer -= Time.deltaTime;
 
-            if (timer <= 0)
+            if(timer <= 0)
             {
                 timer = 0;
                 index = 0;
@@ -70,15 +71,18 @@ public class KonamiCode : MonoBehaviour
 
     private void CheckInput(InputAction action, string actionName)
     {
-        if (action.triggered)
+        if(action.triggered)
         {
-            print(actionName);
+            if(showDebugLogs)
+            {
+                print(actionName);
+            }
 
-            if (actionName == expectedInputs[index])
+            if(actionName == expectedInputs[index])
             {
                 index++;
 
-                if (index == expectedInputs.Length)
+                if(index == expectedInputs.Length)
                 {
                     success = true;
                     OnSuccess?.Invoke();

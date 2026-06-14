@@ -35,23 +35,8 @@ public class AsteroidSpawner : MonoBehaviour
     {
         int amountToSpawn = Mathf.RoundToInt(baseEnemies * Mathf.Pow(growthFactor, currentWave - 1));
 
-        //for(int i = 0; i < amountToSpawn; i++)
-        //{
-        //    //Could spawn randomly around center but better to do at edge
-        //    //Random.insideUnitSphere.normalized * 15; //.normalized * 8f;
-        //    Vector3 spawnLocation = ScreenPositionUtility.GetRandomOffScreenPosition(Camera.main, 0, 0.1f);
-        //    spawnLocation.y = transform.position.y;
-        //    Spawn(largePrefab, spawnLocation, asteroidHolder);
-        //}
-
-        // int total = 8; // 8 evenly spaced spawn points
         for(int i = 0; i < amountToSpawn; i++)
         {
-            //Vector3 spawnLocation = ScreenPositionUtility.GetRandomOffScreenPosition(Camera.main,
-            //    fixedY: 0f,
-            //    offscreenPercent: 0.1f
-            //);
-
 
             Vector3 spawnLocation = ScreenPositionUtility.GetOffScreenPositionIndexed(
                 Camera.main,
@@ -61,25 +46,6 @@ public class AsteroidSpawner : MonoBehaviour
                 offscreenPercent: 0.1f,
                 spacingPercent: 0.2f
             );
-
-            // Vector3 spawnLocation = ScreenPositionUtility.GetOffScreenPositionAroundEdgeIndexed(
-            //    Camera.main,
-            //    fixedY: 0f,
-            //    spawnIndex: i,
-            //    totalPoints: amountToSpawn,
-            //    offscreenPercent: 0.1f
-            //);
-
-            // Vector3 spawnLocation = ScreenPositionUtility.GetOffScreenPositionFromLargerPool(
-            //    Camera.main,
-            //    fixedY: 0f,
-            //    spawnIndex: i,
-            //    totalPoints: amountToSpawn,
-            //     virtualTotalPoints: amountToSpawn + Random.Range(0, 5),
-            //     offscreenPercent: 0.1f,
-            //     jitterPercent: 0.05f
-            //);
-
 
             spawnLocation.y = transform.position.y;
 
@@ -100,7 +66,7 @@ public class AsteroidSpawner : MonoBehaviour
                     break;
             }
 
-            Spawn(largePrefab, spawnLocation, asteroidHolder, spawnRotation);
+            Spawn(largePrefab, spawnLocation, asteroidHolder, spawnRotation, i);
         }
 
     }
@@ -112,7 +78,7 @@ public class AsteroidSpawner : MonoBehaviour
         TowardsRandomPoint
     }
 
-    public void Spawn(GameObject prefabToUse, Vector3 spawnPosition, Transform holder, Quaternion? rotation = null)
+    public void Spawn(GameObject prefabToUse, Vector3 spawnPosition, Transform holder, Quaternion? rotation = null, int index = -999)
     {
         if(aliveCount >= maxAsteroids)
         {
@@ -121,7 +87,16 @@ public class AsteroidSpawner : MonoBehaviour
 
         rotation = rotation ?? Quaternion.identity;
 
-        GameObject newObjectToSpawn = Instantiate(prefabToUse, spawnPosition, (Quaternion)rotation, holder);
+
+        GameObject newObjectToSpawn;
+        if(index == -999)
+        {
+            newObjectToSpawn = Instantiate(prefabToUse, spawnPosition, (Quaternion)rotation, holder);
+        }
+        else
+        {
+            newObjectToSpawn = GameObject.FindFirstObjectByType<LaneSpawner>().SpawnAtSetSideLocationIndex(index);
+        }
         Asteroid asteroidScript = newObjectToSpawn.GetComponent<Asteroid>();
         asteroidScript.OnDied += HandleAsteroidDeath;
 
@@ -153,7 +128,5 @@ public class AsteroidSpawner : MonoBehaviour
         {
             Spawn(asteroid.NextPrefab, (Vector3)asteroid.transform.position + (i == 0 ? dir : -dir) * 0.4f, asteroidHolder);
         }
-
-
     }
 }

@@ -10,21 +10,29 @@ public class ShootingSound : MonoBehaviour
 
     private void OnEnable()
     {
-        foreach (var shootingScript in shootingScripts)
+        foreach(var shootingScript in shootingScripts)
         {
+            if(shootingScript == null)
+            {
+                continue;
+            }
             shootingScript.OnFiredShot.AddListener(OnShoot);
         }
     }
     private void OnDisable()
     {
-        foreach (var shootingScript in shootingScripts)
+        foreach(var shootingScript in shootingScripts)
         {
+            if(shootingScript == null)
+            {
+                continue;
+            }
             shootingScript.OnFiredShot.RemoveListener(OnShoot);
         }
     }
     private void OnShoot()
     {
-     
+
         audioSource.Play();
     }
 }

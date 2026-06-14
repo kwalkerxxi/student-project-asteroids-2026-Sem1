@@ -47,10 +47,33 @@ public class UFOSmallShooting : MonoBehaviour
         }
     }
 
+    public Vector3 GetScreenCenterOnGround()
+    {
+        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+
+        Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero); // Y = 0 plane
+
+        if(groundPlane.Raycast(ray, out float enter))
+        {
+            Vector3 hitPoint = ray.GetPoint(enter);
+
+            // already on Y=0 plane, but enforce if needed:
+            hitPoint.y = 0f;
+
+            return hitPoint;
+        }
+
+        return Vector3.zero; // fallback if ray doesn't hit
+    }
+
     private void Update()
     {
         if(playerToTarget == null)
         {
+            playerToTarget = new GameObject("TempTarget").transform;
+            playerToTarget.transform.position = GetScreenCenterOnGround();
             return;
         }
 

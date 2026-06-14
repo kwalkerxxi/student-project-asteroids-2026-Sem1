@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 212500893}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6145217670ecb354e9fa00422a0c8ba9, type: 3}
   m_Name: 
@@ -9365,14 +9365,46 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 462714568723430859, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
       propertyPath: timeScaleForChecking
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1064231469387703422, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1656167988026108521, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656167988026108521, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
+      propertyPath: maxSpawnDelay
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1656167988026108521, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
+      propertyPath: minSpawnDelay
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 5727978555469714720, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727978555469714720, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
+      propertyPath: leftTopLanes
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727978555469714720, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
+      propertyPath: topRightLanes
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727978555469714720, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
+      propertyPath: bottomLeftLanes
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727978555469714720, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
+      propertyPath: rightBottomLanes
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5727978555469714720, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}
+      propertyPath: showSpawnLocations
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5727978555469714720, guid: dae9f6c482df2404f925d8c6b18fdf22, type: 3}

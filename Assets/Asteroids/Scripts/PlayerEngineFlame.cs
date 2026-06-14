@@ -18,7 +18,7 @@ public class PlayerEngineFlame : MonoBehaviour
     private List<GameObject> flameFX = new List<GameObject>();
     [SerializeField]
     private float centralEngineDistance = 0.1f;
-    
+
 
     // Setup variables
     private PlayerInput playerInput;
@@ -36,13 +36,13 @@ public class PlayerEngineFlame : MonoBehaviour
     void Start()
     {
         flameFX.Sort((a, b) => a.transform.position.x.CompareTo(b.transform.position.x));
-        for (int i = 0; i < flameFX.Count; i++)
+        for(int i = 0; i < flameFX.Count; i++)
         {
-            if (flameFX[i].transform.position.x < -centralEngineDistance)
+            if(flameFX[i].transform.position.x < -centralEngineDistance)
             {
                 lastLeftHandEngineIndex = i;
             }
-            else if (flameFX[i].transform.position.x > centralEngineDistance)
+            else if(flameFX[i].transform.position.x > centralEngineDistance)
             {
                 firstRightHandEngineIndex = i;
             }
@@ -77,7 +77,7 @@ public class PlayerEngineFlame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void FixedUpdate()
@@ -85,54 +85,70 @@ public class PlayerEngineFlame : MonoBehaviour
         // Rotation Handling
         // Get rotation direction
         float rotationDirection = 0;
-        if (isHoldingRotate)
+        if(isHoldingRotate)
         {
             rotationInput = rotationInputAction.ReadValue<Vector2>();
             float angle = Mathf.Atan2(rotationInput.y, rotationInput.x) * Mathf.Rad2Deg;
 
             string scheme = playerInput.currentControlScheme;
 
-            if (scheme == "Keyboard&Mouse")
+            if(scheme == "Keyboard&Mouse")
             {
                 //Debug.Log("Using keyboard and mouse");
-            rotationDirection = rotationInputAction.ReadValue<Vector2>().x; 
+                rotationDirection = rotationInputAction.ReadValue<Vector2>().x;
             }
-            else if (scheme == "Gamepad")
+            else if(scheme == "Gamepad")
             {
                 //Debug.Log("Using gamepad");
-            rotationDirection = (rotationInputAction.ReadValue<Vector2>().x + rotationInputAction.ReadValue<Vector2>().y); 
+                rotationDirection = (rotationInputAction.ReadValue<Vector2>().x + rotationInputAction.ReadValue<Vector2>().y);
             }
 
 
         }
 
+
+        for(int i = 0; i < flameFX.Count; i++)
+        {
+            if(flameFX[i] == null)
+            {
+                return;
+            }
+        }
+
+
+
         // Activate engines based on rotation direction
-        if (rotationDirection < -0.01f)
+        if(rotationDirection < -0.01f)
         {
             // Right on
-            for (int i = 0; i < flameFX.Count; i++)
+            for(int i = 0; i < flameFX.Count; i++)
             {
-                if (i >= firstRightHandEngineIndex)
+
+
+                if(i >= firstRightHandEngineIndex)
                 {
                     flameFX[i].GetComponent<ParticleSystem>().Play();
                 }
-                else if (i <= lastLeftHandEngineIndex)
+                else if(i <= lastLeftHandEngineIndex)
                 {
                     flameFX[i].GetComponent<ParticleSystem>().Stop();
                 }
             }
 
         }
-        else if (rotationDirection > 0.01f)
+        else if(rotationDirection > 0.01f)
         {
+
             // Left on
-            for (int i = 0; i < flameFX.Count; i++)
+            for(int i = 0; i < flameFX.Count; i++)
             {
-                if (i >= firstRightHandEngineIndex)
+
+
+                if(i >= firstRightHandEngineIndex)
                 {
                     flameFX[i].GetComponent<ParticleSystem>().Stop();
                 }
-                else if (i <= lastLeftHandEngineIndex)
+                else if(i <= lastLeftHandEngineIndex)
                 {
                     flameFX[i].GetComponent<ParticleSystem>().Play();
                 }
@@ -142,13 +158,16 @@ public class PlayerEngineFlame : MonoBehaviour
         else
         {
             // Turn the side thrusters off.
-            for (int i = 0; i < flameFX.Count; i++)
+            for(int i = 0; i < flameFX.Count; i++)
             {
-                if (i >= firstRightHandEngineIndex)
+
+
+
+                if(i >= firstRightHandEngineIndex)
                 {
                     flameFX[i].GetComponent<ParticleSystem>().Stop();
                 }
-                else if (i <= lastLeftHandEngineIndex)
+                else if(i <= lastLeftHandEngineIndex)
                 {
                     flameFX[i].GetComponent<ParticleSystem>().Stop();
                 }
@@ -156,11 +175,13 @@ public class PlayerEngineFlame : MonoBehaviour
         }
 
         // Forward acceleration handling
-        if (thrustInput > 0.1f)
+        if(thrustInput > 0.1f)
         {
-            for (int i = 0; i < flameFX.Count; i++)
+            for(int i = 0; i < flameFX.Count; i++)
             {
-                if (!(i <= lastLeftHandEngineIndex || i >= firstRightHandEngineIndex))
+
+
+                if(!(i <= lastLeftHandEngineIndex || i >= firstRightHandEngineIndex))
                 {
                     flameFX[i].GetComponent<ParticleSystem>().Play();
                 }
@@ -168,9 +189,10 @@ public class PlayerEngineFlame : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < flameFX.Count; i++)
+            for(int i = 0; i < flameFX.Count; i++)
             {
-                if (!(i <= lastLeftHandEngineIndex || i >= firstRightHandEngineIndex))
+
+                if(!(i <= lastLeftHandEngineIndex || i >= firstRightHandEngineIndex))
                 {
                     flameFX[i].GetComponent<ParticleSystem>().Stop();
                 }

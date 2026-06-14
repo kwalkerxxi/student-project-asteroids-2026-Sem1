@@ -18,6 +18,7 @@ public class UFOSpawner : MonoBehaviour
     float waitTimeForNextSpawn = 1f;
     private void Start()
     {
+        waitTimeForNextSpawn = Random.Range(minSpawnDelay, maxSpawnDelay);
         InvokeRepeating(nameof(SpawnLoop), waitTimeForNextSpawn, waitTimeForNextSpawn);
     }
 
